@@ -9,7 +9,7 @@
 
 
 # 2. install modules
-`$ cd vite-project`
+`$ cd app`
 
 `$ npm install`
 
