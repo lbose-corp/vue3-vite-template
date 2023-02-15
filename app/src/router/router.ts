@@ -10,6 +10,15 @@ const routes = [
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
   },
+  {
+    path: "/register",
+    name: "Register",
+    components: {
+      default: () => import("@/components/pages/RegisterPage.vue"),
+      Header: () => import("@/components/layouts/HeaderLayout.vue"),
+      // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
+    },
+  },
 ];
 
 const router = createRouter({
