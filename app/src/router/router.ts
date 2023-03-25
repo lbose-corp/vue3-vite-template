@@ -19,6 +19,15 @@ const routes = [
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
   },
+  {
+    path: "/password/forgot",
+    name: "PasswordForgot",
+    components: {
+      default: () => import("@/components/pages/PasswordForgotPage.vue"),
+      Header: () => import("@/components/layouts/HeaderLayout.vue"),
+      // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
+    },
+  },
 ];
 
 const router = createRouter({

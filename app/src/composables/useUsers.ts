@@ -7,7 +7,7 @@ export default function useUsers() {
 
   const login = async (email: string, password: string) => {
     const params = { email: email, password: password }
-    return api.post('/api/login', params)
+    return api.post('/login', params, { withCredentials: true })
   }
 
   const register = async (name: string, email: string, password: string, password_confirmation: string) => {
@@ -18,12 +18,19 @@ export default function useUsers() {
       password_confirmation: password_confirmation
     }
 
-    return api.post('/api/register', params)
+    await api.get('/sanctum/csrf-cookie')
+    return api.post('/register', params)
+  }
+
+  const sendPasswordResetLink = async (email: string) => {
+    const params = { email: email }
+    return api.post('/password/request', params)
   }
 
   return {
     user,
     login,
-    register
+    register,
+    sendPasswordResetLink
   }
 }

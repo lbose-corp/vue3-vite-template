@@ -1,29 +1,45 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
 import useUsers from '../../composables/useUsers'
+import { useForm, useField } from 'vee-validate'
+import * as yup from 'yup'
 const toast = inject('toast');
 
 const { register } = useUsers()
 
-const name = ref('');
-const email = ref('');
-const password = ref('');
-const password_confirmation = ref('');
+const { handleSubmit, errors, setErrors } = useForm({
+  validationSchema: yup.object({
+    name: yup.string().required('名前は必須項目です'),
+    email: yup.string().required('メールアドレスは必須項目です').email("メールアドレスの形式を入力してください"),
+    password: yup.string().required('パスワードは必須項目です').min(8, "パスワードは8文字以上で入力してください"),
+    password_confirmation: yup.string().required('パスワード（確認用）は必須項目です').oneOf([yup.ref('password')], 'パスワードが一致しません'),
+  })
+});
 
-const executeRegister = () => {
+const { value: name } = useField<string>('name', {}, { validateOnValueUpdate: false })
+const { value: email } = useField<string>('email', {}, { validateOnValueUpdate: false })
+const { value: password } = useField<string>('password', {}, { validateOnValueUpdate: false })
+const { value: password_confirmation } = useField<string>('password_confirmation', {}, { validateOnValueUpdate: false })
+
+
+const executeRegister = handleSubmit(() => {
     register(name.value, email.value, password.value, password_confirmation.value).then(rs => {
         // トップページに移動する
     }).catch((error) => {
         // ステータスコードによってエラーメッセージを変更する
         if (error.response.status === 401) {
+            console.log(error.response.data.message)
             toast.show(error.response.data.message, { type: "error" })
         } else if(error.response.status === 422) {
+            console.log(error.response.data.message)
+            setErrors(error.response.data.errors)
             // toast.show(error.response.data.message, { type: "error" }) // vee-validateを入れたら楽になる
         } else {
+            console.log(error.response)
             toast.show("予期せぬエラーが発生しました", { type: "error" })
         }
     });
-}
+})
 </script>
 
 <template>
@@ -31,32 +47,46 @@ const executeRegister = () => {
       <div class="container max-w-md mx-auto flex-1 flex flex-col items-center justify-center px-2">
           <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
               <h1 class="mb-8 text-3xl text-center">会員登録</h1>
-              <input
-                  type="text"
-                  class="block border border-grey-light w-full p-3 rounded mb-4"
-                  name="fullname"
-                  placeholder="氏名"
-                  v-model="name" />
+              <div class="form-group mb-4">
+                    <input
+                        type="text"
+                        class="block border border-grey-light w-full p-3 rounded"
+                        name="name"
+                        placeholder="氏名"
+                        v-model="name" />
+                    <span v-show="errors.name" class="error-message">{{ errors.name }}</span>
+              </div>
+              <div class="form-group mb-4">
+                    <input
+                        type="text"
+                        class="block border border-grey-light w-full p-3 rounded"
+                        name="email"
+                        placeholder="メールアドレス"
+                        v-model="email" />
+                    <span v-show="errors.email" class="error-message">{{ errors.email }}</span>
+              </div>
 
-              <input
-                  type="text"
-                  class="block border border-grey-light w-full p-3 rounded mb-4"
-                  name="email"
-                  placeholder="メールアドレス"
-                  v-model="email" />
+              <div class="form-group mb-4">
+                    <input
+                        type="password"
+                        class="block border border-grey-light w-full p-3 rounded"
+                        name="password"
+                        placeholder="パスワード"
+                        v-model="password" />
+                    <span v-show="errors.password" class="error-message">{{ errors.password }}</span>
+              </div>
 
-              <input
-                  type="password"
-                  class="block border border-grey-light w-full p-3 rounded mb-4"
-                  name="password"
-                  placeholder="パスワード"
-                  v-model="password" />
-              <input
-                  type="password"
-                  class="block border border-grey-light w-full p-3 rounded mb-4"
-                  name="confirm_password"
-                  placeholder="パスワード（確認用）"
-                  v-model="password_confirmation" />
+              <div class="form-group mb-4">
+                    <input
+                        type="password"
+                        class="block border border-grey-light w-full p-3 rounded"
+                        name="password_confirmation"
+                        placeholder="パスワード（確認用）"
+                        v-model="password_confirmation" />
+                    <span v-show="errors.password_confirmation" class="error-message">{{ errors.password_confirmation }}</span>
+              </div>
+
+
 
               <button
                   type="submit"
@@ -74,3 +104,9 @@ const executeRegister = () => {
       </div>
   </div>
 </template>
+
+
+<style lang="sass" scoped>
+.error-message
+  @apply text-red-500 text-xs
+</style>
