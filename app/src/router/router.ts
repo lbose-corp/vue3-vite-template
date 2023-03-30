@@ -28,6 +28,24 @@ const routes = [
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
   },
+  {
+    path: "/password/reset",
+    name: "PasswordReset",
+    components: {
+      default: () => import("@/components/pages/PasswordResetPage.vue"),
+      Header: () => import("@/components/layouts/HeaderLayout.vue"),
+      // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
+    },
+  },
+  {
+    path: "/password/reset/complete",
+    name: "PasswordResetComplete",
+    components: {
+      default: () => import("@/components/pages/PasswordResetCompletePage.vue"),
+      Header: () => import("@/components/layouts/HeaderLayout.vue"),
+      // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
+    },
+  },
 ];
 
 const router = createRouter({

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
-import useUsers from '../../composables/useUsers'
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
+import { useCurrentUserStore } from "@/stores/user";
+
 const toast = inject('toast');
+const userStore = useCurrentUserStore();
 
 const { handleSubmit, errors, setErrors, resetForm } = useForm({
   validationSchema: yup.object({
@@ -13,25 +15,17 @@ const { handleSubmit, errors, setErrors, resetForm } = useForm({
 
 const { value: email } = useField<string>('email', {}, { validateOnValueUpdate: false })
 
-
-const { sendPasswordResetLink } = useUsers()
-
 //　ログインを実行する
-const executeSendResetLink = handleSubmit(() => {
-  sendPasswordResetLink(email.value).then(rs => {
-    toast.show("再設定用のメール送信が完了しました。", { type: "info" })
-    resetForm()
-  })
-  .catch((error) => {
-    // ステータスコードによってエラーメッセージを変更する
-    if (error.response.status === 401) {
-      toast.show(error.response.data.message, { type: "error" })
-    } else if(error.response.status === 422) {
-      setErrors(error.response.data.errors)
-    } else {
-      toast.show("予期せぬエラーが発生しました", { type: "error" })
-    }
-  });
+const executeSendResetLink = handleSubmit(async () => {
+  const res = await userStore.sendPasswordResetLink(email.value)
+
+  if (res.status == 200) {
+      // トップページに移動する
+  } else if (res.status = 422) {
+      setErrors(res.errors)
+  } else {
+      toast.show(res.error, { type: "error" })
+  }
 })
 
 </script>
