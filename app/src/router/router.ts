@@ -3,50 +3,64 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     components: {
-      default: () => import("@/components/pages/LoginPage.vue"),
+      default: () => import("@/components/pages/Auth/LoginPage.vue"),
       Header: () => import("@/components/layouts/HeaderLayout.vue"),
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
   },
   {
     path: "/register",
-    name: "Register",
+    name: "register",
     components: {
-      default: () => import("@/components/pages/RegisterPage.vue"),
+      default: () => import("@/components/pages/Auth/RegisterPage.vue"),
       Header: () => import("@/components/layouts/HeaderLayout.vue"),
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
   },
   {
     path: "/password/forgot",
-    name: "PasswordForgot",
+    name: "passwordForgot",
     components: {
-      default: () => import("@/components/pages/PasswordForgotPage.vue"),
+      default: () => import("@/components/pages/Auth/PasswordForgotPage.vue"),
       Header: () => import("@/components/layouts/HeaderLayout.vue"),
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
   },
   {
     path: "/password/reset",
-    name: "PasswordReset",
+    name: "passwordReset",
     components: {
-      default: () => import("@/components/pages/PasswordResetPage.vue"),
+      default: () => import("@/components/pages/Auth/PasswordResetPage.vue"),
       Header: () => import("@/components/layouts/HeaderLayout.vue"),
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
   },
   {
     path: "/password/reset/complete",
-    name: "PasswordResetComplete",
+    name: "passwordResetComplete",
     components: {
-      default: () => import("@/components/pages/PasswordResetCompletePage.vue"),
+      default: () => import("@/components/pages/Auth/PasswordResetCompletePage.vue"),
       Header: () => import("@/components/layouts/HeaderLayout.vue"),
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
   },
+  {
+    path: "/",
+    name: "top",
+    components: {
+      default: () => import("@/components/pages/TopPage.vue"),
+      Header: () => import("@/components/layouts/HeaderLayout.vue"),
+      // Footer: () => import("@/components/layouts/FooterLayout.vue"),
+    },
+    meta: {
+      requiresAuth: true,
+    }
+  }
 ];
+
+
 
 const router = createRouter({
   history: createWebHistory(),

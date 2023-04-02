@@ -3,6 +3,7 @@ import { inject } from "vue";
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useCurrentUserStore } from "@/stores/user";
+import router from "@/router/router";
 
 const toast = inject('toast');
 const userStore = useCurrentUserStore();
@@ -22,7 +23,7 @@ const { value: password } = useField<string>('password', {}, { validateOnValueUp
 const executeLogin = handleSubmit(async() => {
   const res = await userStore.login(email.value, password.value)
   if (res.status == 200) {
-    // トップページに移動する
+    router.push("/")
   } else if (res.status = 422) {
     setErrors(res.errors)
   } else {

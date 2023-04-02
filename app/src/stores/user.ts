@@ -11,10 +11,15 @@ export const useCurrentUserStore = defineStore("currentUser", {
   state: () => ({
     user: null as User | null,
   }),
-  getters: {
-    isLoggedIn: (state) => !!state.user,
-  },
   actions: {
+    async isLoggedIn() {
+      const loginUser = await apiGet<User>("/api/me");
+      if (!loginUser.error && !this.user) {
+        this.user = loginUser.data;
+      }
+
+      return !loginUser.error;
+    },
      //  ログインをする
     async login (email: string, password: string) {
       const params = { email: email, password: password }
@@ -62,6 +67,16 @@ export const useCurrentUserStore = defineStore("currentUser", {
       }
 
       return apiPost('/api/password/reset', params)
+    },
+
+    // ログアウト
+    async logout () {
+      const res = await apiPost('/api/logout')
+      if(!res.error) {
+        this.user = null
+      }
+
+      return res;
     }
   },
 });
