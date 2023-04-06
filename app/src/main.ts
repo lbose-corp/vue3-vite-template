@@ -16,8 +16,11 @@ app.mount("#app");
 //認証不要ページ
 const needless_auth_pages = [
     'login',
+    'register',
     'forgetPassword',
-    'resetPassword'
+    'resetPassword',
+    'passwordForgot',
+    'passwordReset',
   ]
 
   const userStore = useCurrentUserStore();
