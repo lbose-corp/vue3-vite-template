@@ -3,6 +3,7 @@ import { ref, inject } from "vue";
 import { useForm, useField } from 'vee-validate'
 import * as yup from 'yup'
 import { useCurrentUserStore } from "@/stores/user";
+import router from "@/router/router";
 
 const toast = inject('toast');
 const userStore = useCurrentUserStore();
@@ -21,11 +22,10 @@ const { value: email } = useField<string>('email', {}, { validateOnValueUpdate: 
 const { value: password } = useField<string>('password', {}, { validateOnValueUpdate: false })
 const { value: password_confirmation } = useField<string>('password_confirmation', {}, { validateOnValueUpdate: false })
 
-
 const executeRegister = handleSubmit(async () => {
     const res = await userStore.register(name.value, email.value, password.value, password_confirmation.value)
     if (res.status == 200) {
-        // トップページに移動する
+        router.push("/register/complete")
     } else if (res.status = 422) {
         setErrors(res.errors)
     } else {

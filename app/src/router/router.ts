@@ -20,6 +20,15 @@ const routes = [
     },
   },
   {
+    path: "/register/complete",
+    name: "registerComplete",
+    components: {
+      default: () => import("@/components/pages/Auth/RegisterCompletePage.vue"),
+      Header: () => import("@/components/layouts/HeaderLayout.vue"),
+      // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
+    },
+  },
+  {
     path: "/password/forgot",
     name: "passwordForgot",
     components: {

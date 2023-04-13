@@ -13,35 +13,26 @@ app.use(Toaster).provide('toast', app.config.globalProperties.$toast)
 app.mount("#app");
 
 
-//認証不要ページ
-const needless_auth_pages = [
-    'login',
-    'register',
-    'forgetPassword',
-    'resetPassword',
-    'passwordForgot',
-    'passwordReset',
-  ]
+const userStore = useCurrentUserStore();
+router.beforeEach(async (to, from, next) => {
+  // 認証が必要なページかどうかを確認する
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-  const userStore = useCurrentUserStore();
-  router.beforeEach(async (to, from, next) => {
-    const isNeedAuth =
-      !to.name?.toString() || !needless_auth_pages.includes(to.name.toString());
-
+  // 認証が必要なページの場合
+  if (requiresAuth) {
+    // APIを呼び出して認証状態を確認する
     const isLoggedIn = await userStore.isLoggedIn()
 
-    //ログインしていれば指定ページに遷移
-    if(isNeedAuth && isLoggedIn) {
-      next();
-      return;
+    if (isLoggedIn) {
+      // 認証が成功した場合、次のページに進む
+      next()
+    } else {
+      // 認証が失敗した場合、ログインページにリダイレクトする
+      next({ name: 'Login' })
     }
-
-    //ログインしていなければログインページに遷移
-    if(isNeedAuth) {
-       next({name: 'login'});
-       return;
-    }
-
-    //権限不要ページ
-    next();
-  });
+  } else {
+    // 認証が不要なページの場合、次のページに進む
+    next()
+  }
+})
+export default router
