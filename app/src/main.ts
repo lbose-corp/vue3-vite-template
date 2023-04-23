@@ -28,7 +28,7 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
       // 認証が失敗した場合、ログインページにリダイレクトする
-      next({ name: 'Login' })
+      next({ name: 'login' })
     }
   } else {
     // 認証が不要なページの場合、次のページに進む
