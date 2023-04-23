@@ -78,8 +78,6 @@ const executeRegister = handleSubmit(async () => {
                     <span v-show="errors.password_confirmation" class="error-message">{{ errors.password_confirmation }}</span>
               </div>
 
-
-
               <button
                   type="submit"
                   class="w-full text-center py-3 rounded bg-blue-700 text-white hover:bg-blue-500 focus:outline-none my-1"

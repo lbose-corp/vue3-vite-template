@@ -29,6 +29,15 @@ const routes = [
     },
   },
   {
+    path: "/email/verify",
+    name: "emailVerify",
+    components: {
+      default: () => import("@/components/pages/Auth/EmailVerificationPage.vue"),
+      Header: () => import("@/components/layouts/HeaderLayout.vue"),
+      // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
+    },
+  },
+  {
     path: "/password/forgot",
     name: "passwordForgot",
     components: {

@@ -54,7 +54,7 @@ export const useCurrentUserStore = defineStore("currentUser", {
     // パスワード再設定メール送信
     async sendPasswordResetLink (email: string)  {
       const params = { email: email }
-      return apiPost('/api/password/request', params)
+      return await apiPost('/api/password/request', params)
     },
 
     // パスワード再設定
@@ -66,7 +66,7 @@ export const useCurrentUserStore = defineStore("currentUser", {
         password_confirmation: password_confirmation
       }
 
-      return apiPost('/api/password/reset', params)
+      return await apiPost('/api/password/reset', params)
     },
 
     // ログアウト
@@ -77,6 +77,11 @@ export const useCurrentUserStore = defineStore("currentUser", {
       }
 
       return res;
+    },
+
+    // メールアドレス認証
+    async verifyEmail (userId: Number, hash: string) {
+      return await apiGet(`/api/email/verify/${String(userId)}/${hash}`)
     }
   },
 });
