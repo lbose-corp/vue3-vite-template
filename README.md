@@ -4,7 +4,7 @@
 `$ curl -fsSL https://get.jetpack.io/devbox | bash`
 
  Windowsの方はこちらを参照ください：https://zenn.dev/desse_nam2o/articles/e0832e5a1bfe44
- 
+
 # 1. open devbox shell
 `$ devbox shell`
 
@@ -19,3 +19,7 @@
 
 # ホットリロードが効かない場合
 https://c-a-p-engineer.github.io/tech/2022/12/08/vue3-vite-hotreload/
+
+
+# 4. .env.exampleを.コピーして.envを作成
+.envにバックエンドのURLを記載してください。
