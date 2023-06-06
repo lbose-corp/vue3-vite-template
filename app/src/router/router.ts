@@ -32,7 +32,8 @@ const routes = [
     path: "/email/verify",
     name: "emailVerify",
     components: {
-      default: () => import("@/components/pages/Auth/EmailVerificationPage.vue"),
+      default: () =>
+        import("@/components/pages/Auth/EmailVerificationPage.vue"),
       Header: () => import("@/components/layouts/HeaderLayout.vue"),
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
@@ -59,7 +60,8 @@ const routes = [
     path: "/password/reset/complete",
     name: "passwordResetComplete",
     components: {
-      default: () => import("@/components/pages/Auth/PasswordResetCompletePage.vue"),
+      default: () =>
+        import("@/components/pages/Auth/PasswordResetCompletePage.vue"),
       Header: () => import("@/components/layouts/HeaderLayout.vue"),
       // Footer: () => import("@/components/layouts/SidebarLayout.vue"),
     },
@@ -74,11 +76,9 @@ const routes = [
     },
     meta: {
       requiresAuth: true,
-    }
-  }
+    },
+  },
 ];
-
-
 
 const router = createRouter({
   history: createWebHistory(),
