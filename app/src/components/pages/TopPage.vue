@@ -3,7 +3,7 @@ import router from "@/router/router";
 import { useCurrentUserStore } from "@/stores/user";
 
 const userStore = useCurrentUserStore();
-const user = userStore.user;
+const {user} = userStore;
 const executeLogout = async () => {
   await userStore.logout();
   router.push("/login");

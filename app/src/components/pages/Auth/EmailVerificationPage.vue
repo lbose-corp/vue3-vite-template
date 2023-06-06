@@ -5,16 +5,16 @@ import { useCurrentUserStore } from "@/stores/user";
 import { onMounted, ref } from "vue";
 
 const userStore = useCurrentUserStore();
-const query = useRoute().query;
+const { query } = useRoute();
 const id = Number(query.id);
 const hash = query.token as string;
 
-let isShow = ref(false);
-let verifyEmailSuccess = ref(false);
+const isShow = ref(false);
+const verifyEmailSuccess = ref(false);
 
 const verifyEmail = async () => {
   const res = await userStore.verifyEmail(id, hash);
-  if (res.status == 200) {
+  if (res.status === 200) {
     isShow.value = true;
     verifyEmailSuccess.value = true;
   } else {

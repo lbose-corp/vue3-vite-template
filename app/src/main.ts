@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import App from './App.vue'
 import { createPinia } from "pinia";
+import Toaster from '@meforma/vue-toaster';
+import App from './App.vue'
 import router from "./router/router";
 import { useCurrentUserStore } from "./stores/user";
-import Toaster from '@meforma/vue-toaster';
 import './index.css'
 
 const app = createApp(App);

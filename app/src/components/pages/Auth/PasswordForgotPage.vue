@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, inject } from "vue";
+import { inject } from "vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import { useCurrentUserStore } from "@/stores/user";
@@ -7,7 +7,7 @@ import { useCurrentUserStore } from "@/stores/user";
 const toast = inject("toast");
 const userStore = useCurrentUserStore();
 
-const { handleSubmit, errors, setErrors, resetForm } = useForm({
+const { handleSubmit, errors, setErrors } = useForm({
   validationSchema: yup.object({
     email: yup
       .string()
@@ -22,13 +22,13 @@ const { value: email } = useField<string>(
   { validateOnValueUpdate: false }
 );
 
-//　ログインを実行する
+// ログインを実行する
 const executeSendResetLink = handleSubmit(async () => {
   const res = await userStore.sendPasswordResetLink(email.value);
 
-  if (res.status == 200) {
+  if (res.status === 200) {
     // トップページに移動する
-  } else if ((res.status = 422)) {
+  } else if (res.status === 422) {
     setErrors(res.errors);
   } else {
     toast.show(res.error, { type: "error" });
@@ -45,13 +45,15 @@ const executeSendResetLink = handleSubmit(async () => {
         <h1 class="mb-8 text-3xl text-center">パスワードを忘れた</h1>
 
         <div class="form-group mb-4">
-          <input
-            type="email"
-            class="block border border-grey-light w-full p-3 rounded"
-            name="email"
-            placeholder="メールアドレス"
-            v-model="email"
-          />
+          <label>
+            <input
+              type="email"
+              class="block border border-grey-light w-full p-3 rounded"
+              name="email"
+              placeholder="メールアドレス"
+              v-model="email"
+            />
+          </label>
           <span v-show="errors.email" class="error-message">{{
             errors.email
           }}</span>

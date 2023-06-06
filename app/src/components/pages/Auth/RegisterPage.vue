@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, inject } from "vue";
+import { inject } from "vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import { useCurrentUserStore } from "@/stores/user";
@@ -54,9 +54,9 @@ const executeRegister = handleSubmit(async () => {
     password.value,
     password_confirmation.value
   );
-  if (res.status == 200) {
+  if (res.status === 200) {
     router.push("/register/complete");
-  } else if ((res.status = 422)) {
+  } else if (res.status === 422) {
     setErrors(res.errors);
   } else {
     toast.show(res.error, { type: "error" });
@@ -72,51 +72,59 @@ const executeRegister = handleSubmit(async () => {
       <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
         <h1 class="mb-8 text-3xl text-center">会員登録</h1>
         <div class="form-group mb-4">
-          <input
-            type="text"
-            class="block border border-grey-light w-full p-3 rounded"
-            name="name"
-            placeholder="氏名"
-            v-model="name"
-          />
+          <label>
+            <input
+              type="text"
+              class="block border border-grey-light w-full p-3 rounded"
+              name="name"
+              placeholder="氏名"
+              v-model="name"
+            />
+          </label>
           <span v-show="errors.name" class="error-message">{{
             errors.name
           }}</span>
         </div>
         <div class="form-group mb-4">
-          <input
-            type="text"
-            class="block border border-grey-light w-full p-3 rounded"
-            name="email"
-            placeholder="メールアドレス"
-            v-model="email"
-          />
+          <label>
+            <input
+              type="text"
+              class="block border border-grey-light w-full p-3 rounded"
+              name="email"
+              placeholder="メールアドレス"
+              v-model="email"
+            />
+          </label>
           <span v-show="errors.email" class="error-message">{{
             errors.email
           }}</span>
         </div>
 
         <div class="form-group mb-4">
-          <input
-            type="password"
-            class="block border border-grey-light w-full p-3 rounded"
-            name="password"
-            placeholder="パスワード"
-            v-model="password"
-          />
+          <label>
+            <input
+              type="password"
+              class="block border border-grey-light w-full p-3 rounded"
+              name="password"
+              placeholder="パスワード"
+              v-model="password"
+            />
+          </label>
           <span v-show="errors.password" class="error-message">{{
             errors.password
           }}</span>
         </div>
 
         <div class="form-group mb-4">
-          <input
-            type="password"
-            class="block border border-grey-light w-full p-3 rounded"
-            name="password_confirmation"
-            placeholder="パスワード（確認用）"
-            v-model="password_confirmation"
-          />
+          <label>
+            <input
+              type="password"
+              class="block border border-grey-light w-full p-3 rounded"
+              name="password_confirmation"
+              placeholder="パスワード（確認用）"
+              v-model="password_confirmation"
+            />
+          </label>
           <span v-show="errors.password_confirmation" class="error-message">{{
             errors.password_confirmation
           }}</span>

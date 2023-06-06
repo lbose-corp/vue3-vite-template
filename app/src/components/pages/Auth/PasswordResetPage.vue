@@ -3,14 +3,13 @@ import { inject } from "vue";
 import { useForm, useField } from "vee-validate";
 import * as yup from "yup";
 import { useRoute } from "vue-router";
-import router from "@/router/router";
 import { useCurrentUserStore } from "@/stores/user";
 
 const userStore = useCurrentUserStore();
 const route = useRoute();
-let query = route.query;
-let token = query.token as null | String;
-let userId = query.id as Number | null;
+const { query } = route;
+const token = query.token as null | string;
+const userId = query.id as number | null;
 
 const toast = inject("toast");
 
@@ -38,7 +37,7 @@ const { value: password_confirmation } = useField<string>(
   { validateOnValueUpdate: false }
 );
 
-//パスワードをリセットする
+// パスワードをリセットする
 const executeResetPassword = handleSubmit(async () => {
   const res = await userStore.resetPassword(
     Number(userId),
@@ -46,9 +45,9 @@ const executeResetPassword = handleSubmit(async () => {
     password.value,
     password_confirmation.value
   );
-  if (res.status == 200) {
+  if (res.status === 200) {
     // トップページに移動する
-  } else if ((res.status = 422)) {
+  } else if (res.status === 422) {
     setErrors(res.errors);
   } else {
     toast.show(res.error, { type: "error" });
@@ -65,26 +64,30 @@ const executeResetPassword = handleSubmit(async () => {
         <h1 class="mb-8 text-3xl text-center">パスワード再設定</h1>
 
         <div class="form-group mb-4">
-          <input
-            type="password"
-            class="block border border-grey-light w-full p-3 rounded"
-            name="password"
-            placeholder="パスワード"
-            v-model="password"
-          />
+          <label>
+            <input
+              type="password"
+              class="block border border-grey-light w-full p-3 rounded"
+              name="password"
+              placeholder="パスワード"
+              v-model="password"
+            />
+          </label>
           <span v-show="errors.password" class="error-message">{{
             errors.password
           }}</span>
         </div>
 
         <div class="form-group mb-4">
-          <input
-            type="password"
-            class="block border border-grey-light w-full p-3 rounded"
-            name="password_confirmation"
-            placeholder="パスワード"
-            v-model="password_confirmation"
-          />
+          <label>
+            <input
+              type="password"
+              class="block border border-grey-light w-full p-3 rounded"
+              name="password_confirmation"
+              placeholder="パスワード"
+              v-model="password_confirmation"
+            />
+          </label>
           <span v-show="errors.password_confirmation" class="error-message">{{
             errors.password_confirmation
           }}</span>
