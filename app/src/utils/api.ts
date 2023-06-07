@@ -13,14 +13,14 @@ const api = axios.create({
 export type SuccessResDataObjectType<T> = {
   data: T;
   error: null;
-  errors: {},
+  errors: {};
   status: number;
 };
 
 export type FailedResErrorObjectType = {
   data: null;
   error: Error;
-  errors: Partial<Record<string, string | undefined>>,
+  errors: Partial<Record<string, string | undefined>>;
   status?: number;
 };
 
@@ -50,7 +50,7 @@ async function syncApi<T>(
       status: 500,
       data: null,
       error: new Error("想定しないエラーが発生しました。"),
-      errors: {}
+      errors: {},
     };
   }
 }

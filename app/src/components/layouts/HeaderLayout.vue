@@ -1,11 +1,7 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <nav id="header-wrapper">
-    ヘッダー
-  </nav>
+  <nav id="header-wrapper">ヘッダー</nav>
 </template>
 
 <style lang="sass" scoped>

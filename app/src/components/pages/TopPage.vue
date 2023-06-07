@@ -3,11 +3,11 @@ import router from "@/router/router";
 import { useCurrentUserStore } from "@/stores/user";
 
 const userStore = useCurrentUserStore();
-const user = userStore.user
-const executeLogout = async() => {
-  await userStore.logout()
-  router.push("/login")
-}
+const { user } = userStore;
+const executeLogout = async () => {
+  await userStore.logout();
+  router.push("/login");
+};
 </script>
 
 <template>
@@ -19,10 +19,6 @@ const executeLogout = async() => {
     </div>
     <button type="button" @click="executeLogout()">ログアウト</button>
   </div>
-
 </template>
 
-
-<style lang="sass" scoped>
-
-</style>
+<style lang="sass" scoped></style>

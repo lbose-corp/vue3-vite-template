@@ -2,14 +2,52 @@ env:
   browser: true
   es2021: true
 extends:
-  - 'plugin:vue/vue3-strongly-recommended'
-  - 'eslint:recommended'
-  - 'plugin:@typescript-eslint/recommended'
-parser: 'vue-eslint-parser'
+  - "plugin:vue/vue3-strongly-recommended"
+  - "@vue/airbnb"
+  - "eslint:recommended"
+  - "plugin:@typescript-eslint/recommended"
+  - "prettier"
+parser: "vue-eslint-parser"
 parserOptions:
-  parser: '@typescript-eslint/parser'
+  parser: "@typescript-eslint/parser"
   sourceType: module
 plugins:
   - vue
-  - '@typescript-eslint'
-rules: {}
+  - "@typescript-eslint"
+rules:
+  {
+    "vue/multi-word-component-names": off,
+    import/no-absolute-path: off,
+    "@typescript-eslint/ban-types":
+      ["error", { "extendDefaults": true, "types": { "{}": false } }],
+    no-return-await: off,
+    camelcase: off,
+    import/extensions:
+      [
+        "error",
+        "ignorePackages",
+        { js: "never", jsx: "never", ts: "never", tsx: "never", vue: "never" },
+      ],
+    import/no-extraneous-dependencies:
+      [
+        "error",
+        {
+          devDependencies: true,
+          optionalDependencies: false,
+          peerDependencies: false,
+        },
+      ],
+  }
+settings:
+  {
+    "import/resolver":
+      {
+        "node": { "extensions": [".js", ".jsx", ".json", ".ts", ".tsx"] },
+        typescript: {},
+        alias:
+          {
+            map: [["@", "./src"]],
+            extensions: [".ts", ".js", ".jsx", ".json", "vue"],
+          },
+      },
+  }
